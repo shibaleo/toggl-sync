@@ -196,7 +196,12 @@ export async function getLatestEntries(){
     allEntries.push(latest);
   }
   console.log(`Total entries fetched: ${allEntries.length}`);
-  return allEntries;
+  const reversed = allEntries.sort((a, b) => {
+    const dateA = new Date(a.start).getTime();
+    const dateB = new Date(b.start).getTime();
+    return dateB - dateA;
+  });
+  return reversed;
 
 }
 
