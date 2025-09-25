@@ -66,7 +66,6 @@ async function fetchWorkspaceData() {
   );
   if (!usersRes.ok) throw new Error("Failed to fetch users");
   cachedUsers = await usersRes.json();
-  console.log(`Fetched ${cachedUsers} users`);
 
   const projectsRes = await fetch(
     `https://api.track.toggl.com/api/v9/workspaces/${WORKSPACE_ID}/projects`,
@@ -137,3 +136,12 @@ export async function getCurrentEntry() {
   }
 }
 
+// --- Example execution ---
+if (import.meta.main) {
+  await fetchWorkspaceData();
+  const start = new Date("2025-09-25");
+  const end = new Date("2025-09-25");
+
+  const entries = await getCurrentEntry();
+  console.log(entries);
+}
