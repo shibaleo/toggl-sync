@@ -52,7 +52,13 @@ export async function getEntries(startDate: Date, endDate: Date) {
   }
 
   console.log(`Total entries fetched: ${allEntries.length}`);
-  return allEntries;
+  const filtered = allEntries.filter((entry) => {
+    const start = new Date(entry.start);
+    const end = new Date(entry.end);
+    return start.getTime() <= endDate.getTime() && end.getTime() >= startDate.getTime();
+  });
+  console.log(`Return entries: ${filtered.length}`);
+  return filtered;
 }
 
 let cachedUsers: any[] = [];
@@ -139,9 +145,9 @@ export async function getCurrentEntry() {
 // --- Example execution ---
 if (import.meta.main) {
   await fetchWorkspaceData();
-  const start = new Date("2025-09-25");
-  const end = new Date("2025-09-25");
+  const start = new Date("2025-09-25T00:00:00+09:00");
+  const end = new Date("2025-09-25T23:59:59+09:00");
 
-  const entries = await getCurrentEntry();
+  const entries = await getEntries(start, end);
   console.log(entries);
 }
