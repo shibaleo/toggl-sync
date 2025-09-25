@@ -158,6 +158,7 @@ export async function getCurrentEntry() {
 }
 
 export async function getLatestEntries(){
+  await fetchWorkspaceData();
   const url = "https://api.track.toggl.com/reports/api/v2/details";
   let allEntries: any[] = [];
   let page = 1;
@@ -201,7 +202,7 @@ export async function getLatestEntries(){
     const dateB = new Date(b.start).getTime();
     return dateB - dateA;
   });
-  return reversed;
+  return reversed.slice(0, 3); // return latest 20 entries
 
 }
 
@@ -214,5 +215,7 @@ if (import.meta.main) {
   //const entries = await getEntries(start, end);
   //const entries = await getCurrentEntry();
   const entries = await getLatestEntries();
-  console.log(entries);
+  entries.forEach((entry) => {
+    console.log(entry.client, entry.project, entry.description);
+  });
 }

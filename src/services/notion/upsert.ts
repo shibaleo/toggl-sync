@@ -93,6 +93,7 @@ if (import.meta.main) {
       console.log(`Total entries fetched: ${entries.length}`);
 
       for (const entry of entries) {
+        console.log(`project: ${entry.project}, description: ${entry.description}`);
         await upsertEntry(entry);
       }
 

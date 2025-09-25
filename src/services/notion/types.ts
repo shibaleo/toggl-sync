@@ -1,4 +1,4 @@
-// services/notion/types.ts
+// services/toggl/types.ts
 
 export interface NotionTableProperties {
   description: { title: { text: { content: string } }[] };
